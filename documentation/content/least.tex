@@ -1,0 +1,33 @@
+\section{\texttt{least\_functor\textlangle TYPE\textrangle}}
+\begin{verbatim}
+template<typename TYPE>
+struct least_functor;
+\end{verbatim}
+Provides a constant \texttt{operator()} which receives zero arguments and returns
+the
+least
+value of type \texttt{TYPE}. The operator may be qualified as constexpr
+and/or noexcept. Specializations for the types
+\texttt{char},
+\texttt{signed char},
+\texttt{unsigned char},
+\texttt{signed short int}       (aka \texttt{short int},     aka \texttt{signed short},     aka \texttt{short}),
+\texttt{signed long int}        (aka \texttt{long int},      aka \texttt{signed long},      aka \texttt{long}),
+\texttt{signed long long int}   (aka \texttt{long long int}, aka \texttt{signed long long}, aka \texttt{long long}),
+\texttt{unsigned short int}     (aka \texttt{unsigned short}),
+\texttt{unsigned long int}      (aka \texttt{unsigned long}), and
+\texttt{unsigned long long int} (aka \texttt{unsigned long long}),
+\texttt{float},
+\texttt{double}, and
+\texttt{long double}
+are provided.
+
+\section{\texttt{least\textlangle TYPE\textrangle()}}
+Function returning the least value of type \texttt{TYPE}.
+\begin{verbatim}
+template<typename TYPE>
+constexpr auto least() noexcept(noexcept(least_functor<TYPE>()()))
+  -> decltype(least_functor<TYPE>()())
+{ return least_functor<TYPE>()(); }
+\end{verbatim}
+The function is constexpr if \verb+least_functor<TYPE>()()+ is constexpr.

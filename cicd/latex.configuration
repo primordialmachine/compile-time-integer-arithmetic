@@ -1,0 +1,18 @@
+"CanonicalOrganizationName" : "primordialmachine",
+"OrganizationName" : "Primordial Machine",
+
+"CanonicalPackageName" : "least-greatest-functors",
+"PackageName" : "Least Greatest Functors",
+
+"AuthorName" : "Michael Heilmann",
+"AuthorEmail" : "michaelheilmann@primordialmachine.com",
+"CopyrightFrom" : "2017",
+"CopyrightTo" : "2019",
+
+"CanonicalPackageTypeName": "library",
+"PackageTypeName" : "Library",
+"PackageVersion" : "0.1",
+
+"RepositoryUrl" : "https://github.com/primordialmachine/least-greatest-functors",
+"Open" : "{",
+"Close" : "}"

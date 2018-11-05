@@ -1,0 +1,55 @@
+\chapter{Example}
+To obtain the least value value and the greatest value of the builtin type \verb+float+:
+\begin{verbatim}
+using primordialmachine;
+least<float>(); /* -FLT_MAX */
+greatest<float>(); /* - FLT_MAX */
+\end{verbatim}
+To obtain the least value and the greatest value of the builtin type \verb+uint64_t+:
+\begin{verbatim}
+using primordialmachine;
+least<uint64_t>(); /* UINT64_C(0) */
+greatest<uint64_t>(); /* UINt64_MAX */
+\end{verbatim}
+
+Consumers can implement these functors for their own types by adding (partial) specializations of \verb+least_expr+ and \verb+greatest_expr+.
+The following example implements the least functor for a user-defined type \verb+template<typename U> V+ (we assume for this example
+that \verb+V<U>::least()+ yields the least value of the type \verb+V<U>+).
+\begin{verbatim}
+namespace primordialmachine {
+template<typename U>
+struct least_expr<V<U>, void>
+{
+  using result_type = V<U>;
+  operator result_type() const noexcept(noexcept(result_type::least()))
+  { return result_type::least(); };
+}; // struct least_expr
+} // namespace primordialmachine
+\end{verbatim}
+
+If \verb+V<U>::least()+ is constexpr, one may add the \verb+constexpr+ keyword.
+\begin{verbatim}
+namespace primordialmachine {
+template<typename U>
+struct least_expr<V<U>, void>
+{
+  using result_type = V<U>;
+  constexpr result_type() const noexcept(noexcept(result_type::least()))
+  { return result_type::least(); };
+}; // struct least_expr
+} // namespace primordialmachine
+\end{verbatim}
+
+Furthermore, \verb+least_expr+ and \verb+greatest_expr+ support SFINAE.
+The following example implements the same functor only if some side condition \verb+C+ evaluates to \verb+true+.
+\begin{verbatim}
+namespace primordialmachine {
+template<typename U>
+struct least_expr<V<U>, std::enable_if_t<C()>>
+{
+  using result_type = V<U>;
+  constexpr auto operator()() const noexcept(noexcept(result_type::value()))
+  { return result_type::value(); };
+}; // struct least_expr
+} // namespace primordialmachine
+\end{verbatim}
